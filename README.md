@@ -1,5 +1,6 @@
 # projet-collectif-pico-8-awen-eloise-romain-celia
 projet-collectif-pico-8-awen-eloise-romain-celia created by GitHub Classroom
+framapads => https://mensuel.framapad.org/p/pico-8-a65p?lang=en
 Brainstorm
 
 Objectifs pédagogiques
