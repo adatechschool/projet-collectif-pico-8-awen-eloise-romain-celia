@@ -5,6 +5,9 @@ __lua__
 function _init()
 	 map_setup()
 	 make_player()
+	 filecat={}
+	 filecat[0]=p
+	 
 	 enemies={}
 	 make_enemies()
 	 kittens={}
@@ -19,7 +22,7 @@ function _update()
 		update_kittens()
 
 end
-
+------------------------------
 function _draw()
 	cls()
 	draw_map()	
@@ -31,6 +34,13 @@ function _draw()
 	p.x=72
 	p.y=132
 	sfx(1)
+	end
+	
+	--drawn filekittens
+	for f in all(filecat) do
+		for i=1, #filecat do
+			spr(f.kit,f.x-8*i,f.y-8*i) 
+		end
 	end
 end
 -->8
@@ -68,13 +78,16 @@ end
 --player code
 
 function make_player()
-	p={}
-	p.speed=3
-	p.x=24
-	p.y=16
-	p.sprite=4
-	p.keys=0
-	p.life=1
+	p={
+	speed=3,
+	x=24,
+	y=16,
+	prevx,
+	prevy,
+	sprite=4,
+	keys=0,
+	life=1
+	}
 end
 
 function draw_player()
@@ -87,6 +100,12 @@ function draw_player()
 end
 
 function move_player()
+	p.prevx=p.x+16
+	p.prevy=p.y+16
+	for i=#filecat,2,-1 do
+		filecat[i].x=filecat[i-1].x
+		filecat[i].y=filecat[i-1].y	
+		end
 	newx=p.x
 	newy=p.y
 	
@@ -149,8 +168,9 @@ end
 --collision
 
 function collision(p,e)
-	print(p.x, p.x, p.y-8)
-	print(p.y)
+	//print(p.x, p.x, p.y-8)
+	//print(p.y)
+	//print(#filecat)
 	return not (p.x>e.x+8
 		or p.y>e.y+8
   or e.x>p.x+8
@@ -197,13 +217,14 @@ function make_kittens()
 	end
 	
 function update_kittens()
-				for k in all(kittens) do
+			for k in all(kittens) do
 				
 					if collision(p, k) then
-	 				k.x=p.x
-	 				k.y=p.y
-	 			
-	 			end
+						
+	 						k.x=p.x
+								k.y=p.y
+	 	//add(filecat,k)		
+	 		end
 				
 			end
 end
@@ -478,7 +499,7 @@ dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
 
 __gff__
-0000ff00010101010100000000000000ffff00ffff00000000000000000000000101ffff0000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000ff000101070f1f00000000000000ffff00ffff00000000000000000000000101ffff0000000000000000000000000000ffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __map__
 2020202020202020202020201310102020030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303101010101010101010030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303
